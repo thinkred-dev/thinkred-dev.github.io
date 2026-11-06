@@ -100,6 +100,7 @@ I'm Josh — I spent ~25 years defending identity and infrastructure, then cross
 
   [params.assets]
     disableFingerprinting = false   # keep SRI integrity hashes on CSS/JS
+    theme_color = '#0a0a0c'         # browser UI / PWA theme color (matches --theme)
 
   [params.fuseOpts]
     isCaseSensitive = false
