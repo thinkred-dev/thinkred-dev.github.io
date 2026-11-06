@@ -207,3 +207,58 @@ h1, h2, h3, h4,
     .post-entry { transition: none; }
     .post-entry:hover { transform: none; }
 }
+
+/* ---------- Avatar / headshot ---------- */
+/* Header: small round avatar to the left of root@thinkred:~#
+   Rendered as a CSS background with a root-relative URL (scheme-agnostic). */
+.logo {
+    display: flex;
+    align-items: center;
+}
+.logo::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: url("/img/avatar.jpg") center / cover no-repeat;
+    border: 1px solid var(--red-dim);
+    filter: saturate(0.9);
+    transition: border-color 0.15s ease, filter 0.15s ease;
+}
+.logo:hover::before {
+    border-color: var(--red);
+    filter: none;
+}
+
+/* About page: head-and-shoulders, floated so the intro wraps beside it */
+figure.about-photo {
+    float: right;
+    width: 190px;
+    margin: 4px 0 1rem 1.5rem;
+}
+figure.about-photo img {
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--red-dim);
+    box-shadow: 0 0 0 1px var(--border), 0 10px 30px -14px var(--red-glow);
+    filter: saturate(0.92) contrast(1.02);
+    transition: filter 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+figure.about-photo img:hover {
+    filter: none;
+    border-color: var(--red);
+    box-shadow: 0 0 0 1px var(--red-dim), 0 12px 34px -12px var(--red-glow);
+}
+@media (max-width: 520px) {
+    figure.about-photo {
+        float: none;
+        width: 100%;
+        margin: 0 0 1.25rem;
+        display: flex;
+        justify-content: center;
+    }
+}

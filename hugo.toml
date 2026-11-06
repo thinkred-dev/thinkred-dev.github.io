@@ -55,7 +55,7 @@ disableKinds = []
 [params]
   env = 'production'
   description = 'Red team tradecraft, explained, and how defenders catch it.'
-  author = 'Think Red'
+  author = 'Josh Villagomez'
   keywords = ['red team', 'adversary emulation', 'offensive security', 'MITRE ATT&CK', 'detection engineering']
   mainSections = ['blog', 'labs', 'papers', 'notes']
   defaultTheme = 'dark'
@@ -78,25 +78,25 @@ disableKinds = []
   [params.homeInfoParams]
     Title = 'Think Red'
     Content = """
-Red team tradecraft, explained, and how defenders catch it.
+I'm Josh — I spent ~25 years defending identity and infrastructure, then crossed to the offensive side to get better at it.
 
-Lab-tested techniques mapped to MITRE ATT&CK, each paired with detection and mitigation.
-All research is performed in authorized environments. [Read the disclaimer](/disclaimer/).
+*Think Red* is my field notebook: red team tradecraft in plain terms, mapped to MITRE ATT&CK and always paired with how defenders catch it. Lab-tested, authorized-only, identity-flavored. [More about me »](/about/)
 """
 
   [[params.socialIcons]]
     name = 'github'
     url = 'https://github.com/thinkred-dev'
   [[params.socialIcons]]
+    name = 'linkedin'
+    url = 'https://www.linkedin.com/in/jvillago'
+  [[params.socialIcons]]
     name = 'rss'
     url = '/index.xml'
-  # Add LinkedIn once your profile URL is final:
-  # [[params.socialIcons]]
-  #   name = 'linkedin'
-  #   url = 'https://www.linkedin.com/in/<your-handle>/'
 
   [params.label]
     text = 'thinkred'               # header logo renders as root@thinkred:~#
+    # avatar is rendered via CSS (.logo::before) with a root-relative URL so it
+    # works under http or https; the theme's label.icon emits an absolute URL.
 
   [params.assets]
     disableFingerprinting = false   # keep SRI integrity hashes on CSS/JS
