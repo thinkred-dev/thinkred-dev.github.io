@@ -1,0 +1,148 @@
+baseURL = 'https://thinkred.dev/'
+locale = 'en-us'
+title = 'Think Red'
+theme = 'PaperMod'
+
+enableRobotsTXT = true
+enableGitInfo = false        # don't leak commit metadata into pages
+buildDrafts = false
+buildFuture = false
+disableKinds = []
+
+[pagination]
+  pagerSize = 10
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']   # JSON powers the on-site search
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+  series = 'series'
+  attack = 'attack'               # MITRE ATT&CK technique IDs, e.g. T1558.003
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = false                # never pass raw HTML from Markdown through
+  [markup.highlight]
+    noClasses = false
+    codeFences = true
+    guessSyntax = false
+    lineNos = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+# Privacy: no third-party embeds or trackers
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    disable = true
+  [privacy.instagram]
+    disable = true
+  [privacy.vimeo]
+    disable = true
+  [privacy.x]
+    disable = true
+  [privacy.youTube]
+    privacyEnhanced = true
+
+[services]
+  [services.rss]
+    limit = 20
+
+[params]
+  env = 'production'
+  description = 'Red team tradecraft, explained, and how defenders catch it.'
+  author = 'Think Red'
+  keywords = ['red team', 'adversary emulation', 'offensive security', 'MITRE ATT&CK', 'detection engineering']
+  mainSections = ['blog', 'labs', 'papers', 'notes']
+  defaultTheme = 'dark'
+  disableThemeToggle = true      # dark-only site
+  DateFormat = 'January 2, 2006'
+
+  ShowReadingTime = true
+  ShowWordCount = false
+  ShowToc = true
+  TocOpen = false
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
+  ShowShareButtons = false
+  ShowRssButtonInSectionTermList = true
+  ShowFullTextinRSS = false
+  disableSpecial1stPost = false
+  comments = false
+
+  [params.homeInfoParams]
+    Title = 'Think Red'
+    Content = """
+Red team tradecraft, explained, and how defenders catch it.
+
+Lab-tested techniques mapped to MITRE ATT&CK, each paired with detection and mitigation.
+All research is performed in authorized environments. [Read the disclaimer](/disclaimer/).
+"""
+
+  [[params.socialIcons]]
+    name = 'github'
+    url = 'https://github.com/thinkred-dev'
+  [[params.socialIcons]]
+    name = 'rss'
+    url = '/index.xml'
+  # Add LinkedIn once your profile URL is final:
+  # [[params.socialIcons]]
+  #   name = 'linkedin'
+  #   url = 'https://www.linkedin.com/in/<your-handle>/'
+
+  [params.label]
+    text = 'thinkred'               # header logo renders as root@thinkred:~#
+
+  [params.assets]
+    disableFingerprinting = false   # keep SRI integrity hashes on CSS/JS
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 2
+    keys = ['title', 'permalink', 'summary', 'content']
+
+  [params.footer]
+    text = 'Views are my own. Content is for education and authorized testing only.'
+
+[menus]
+  [[menus.main]]
+    name = 'Blog'
+    pageRef = '/blog'
+    weight = 10
+  [[menus.main]]
+    name = 'Labs'
+    pageRef = '/labs'
+    weight = 20
+  [[menus.main]]
+    name = 'Papers'
+    pageRef = '/papers'
+    weight = 30
+  [[menus.main]]
+    name = 'Tools'
+    pageRef = '/tools'
+    weight = 40
+  [[menus.main]]
+    name = 'Notes'
+    pageRef = '/notes'
+    weight = 50
+  [[menus.main]]
+    name = 'ATT&CK'
+    pageRef = '/attack'
+    weight = 60
+  [[menus.main]]
+    name = 'Search'
+    pageRef = '/search'
+    weight = 70
+  [[menus.main]]
+    name = 'About'
+    pageRef = '/about'
+    weight = 80

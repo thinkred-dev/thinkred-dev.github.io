@@ -1,0 +1,209 @@
+/* =====================================================================
+   Think Red: dark, red-accented "operator terminal" theme for PaperMod
+   No external fonts or assets; system monospace stack only.
+   ===================================================================== */
+
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+    --theme: #0a0a0c;            /* page background */
+    --entry: #121216;            /* cards, header */
+    --primary: #f1f1f3;          /* headings, strong text */
+    --secondary: #9b9ba3;        /* meta text */
+    --tertiary: #2a1418;         /* subtle fills (hover, tags) */
+    --content: #d4d4d8;          /* body text */
+    --code-block-bg: #0e0e11;
+    --code-bg: #1b1b21;
+    --border: #2a1a1d;
+
+    --red: #e5243b;              /* primary accent */
+    --red-bright: #ff4d61;       /* hover / glow */
+    --red-dim: #7a1420;          /* borders, rules */
+    --red-glow: rgba(229, 36, 59, 0.35);
+    --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+html { color-scheme: dark; }
+
+body {
+    background-color: var(--theme);
+    /* faint scanlines + vignette, no images */
+    background-image:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px),
+        radial-gradient(ellipse at top, rgba(229, 36, 59, 0.07), transparent 60%);
+    background-attachment: fixed;
+}
+
+::selection { background: var(--red); color: #fff; }
+
+/* ---------- Header / navigation ---------- */
+.header {
+    border-bottom: 1px solid var(--red-dim);
+    background: rgba(10, 10, 12, 0.85);
+}
+
+.logo a {
+    font-family: var(--mono);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--primary);
+    column-gap: 0;               /* keep root@thinkred:~# as one token */
+}
+.logo a::before {                 /* shell prompt */
+    content: "root@";
+    color: var(--red);
+}
+.logo a::after {
+    content: ":~#";
+    color: var(--secondary);
+}
+
+#menu a {
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--secondary);
+}
+#menu a:hover,
+#menu .active {
+    color: var(--red-bright);
+    border-bottom: 2px solid var(--red);
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4,
+.post-title,
+.entry-header h2,
+.home-info .entry-header h1,
+.first-entry .entry-header h1 {
+    font-family: var(--mono);
+    color: var(--primary);
+    letter-spacing: -0.01em;
+}
+
+.post-content h2 {
+    border-bottom: 1px solid var(--red-dim);
+    padding-bottom: 6px;
+}
+.post-content h2::before {
+    content: "## ";
+    color: var(--red);
+}
+.post-content h3::before {
+    content: "### ";
+    color: var(--red-dim);
+}
+
+.post-content a,
+.home-info .entry-content a,
+.toc a:hover {
+    color: var(--red-bright);
+    box-shadow: 0 1px 0 var(--red-dim);
+}
+.post-content a:hover { box-shadow: 0 1px 0 var(--red-bright); }
+
+.post-content blockquote {
+    border-inline-start: 3px solid var(--red);
+    background: var(--entry);
+    padding: 8px 16px;
+    color: var(--content);
+}
+
+.post-content hr { background: var(--red-dim); }
+
+/* ---------- Home ---------- */
+.home-info .entry-header h1::after,
+.first-entry .entry-header h1::after {   /* blinking cursor */
+    content: "_";
+    color: var(--red);
+    margin-left: 4px;
+    animation: tr-blink 1.1s steps(1) infinite;
+}
+@keyframes tr-blink { 50% { opacity: 0; } }
+
+/* ---------- Post cards ---------- */
+.post-entry {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red-dim);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.post-entry:hover {
+    border-left-color: var(--red);
+    box-shadow: 0 0 0 1px var(--red-dim), 0 6px 24px -12px var(--red-glow);
+    transform: translateY(-1px);
+}
+.entry-footer,
+.post-meta,
+.breadcrumbs { font-family: var(--mono); font-size: 13px; color: var(--secondary); }
+.breadcrumbs a { color: var(--red); }
+
+/* ---------- Tags / taxonomy ---------- */
+.post-tags a,
+.terms-tags a {
+    font-family: var(--mono);
+    background: var(--tertiary);
+    border: 1px solid var(--red-dim);
+    color: var(--content);
+}
+.post-tags a:hover,
+.terms-tags a:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+}
+
+/* ---------- Code ---------- */
+.post-content code { color: #ff8a96; font-family: var(--mono); }
+.post-content pre code { color: var(--content); }
+.post-content pre,
+.post-content .highlight pre {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    background: var(--code-block-bg) !important;
+}
+.copy-code { background: var(--red-dim) !important; color: #fff !important; font-family: var(--mono); }
+
+/* ---------- Tables ---------- */
+.post-content table th {
+    font-family: var(--mono);
+    background: var(--tertiary);
+    color: var(--primary);
+    border-bottom: 2px solid var(--red-dim);
+}
+.post-content table td,
+.post-content table th { border-color: var(--border); }
+
+/* ---------- TOC, pagination, search ---------- */
+.toc { background: var(--entry); border: 1px solid var(--border); border-left: 3px solid var(--red-dim); }
+.toc details summary { font-family: var(--mono); color: var(--red); }
+
+.pagination a,
+.paginav { background: var(--entry); border: 1px solid var(--border); }
+.pagination a:hover,
+.paginav a:hover { border-color: var(--red); color: var(--red-bright); }
+
+#searchbox input {
+    background: var(--entry);
+    border: 1px solid var(--red-dim);
+    font-family: var(--mono);
+    color: var(--primary);
+}
+#searchbox input:focus { border-color: var(--red); box-shadow: 0 0 0 2px var(--red-glow); outline: none; }
+#searchResults li { background: var(--entry); border: 1px solid var(--border); }
+#searchResults .focus { border-color: var(--red); }
+
+/* ---------- Footer / misc ---------- */
+.footer { font-family: var(--mono); font-size: 12px; color: var(--secondary); border-top: 1px solid var(--border); }
+.footer a { color: var(--red); }
+.top-link { background: var(--red-dim); color: #fff; }
+.top-link:hover { background: var(--red); }
+.social-icons a svg:hover { color: var(--red-bright); }
+
+:focus-visible { outline: 2px solid var(--red-bright); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .home-info .entry-header h1::after,
+    .first-entry .entry-header h1::after { animation: none; }
+    .post-entry { transition: none; }
+    .post-entry:hover { transform: none; }
+}
