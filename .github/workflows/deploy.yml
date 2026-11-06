@@ -54,7 +54,7 @@ jobs:
           HUGO_ENVIRONMENT: production
         run: |
           hugo version
-          hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+          hugo --gc --minify   # baseURL comes from hugo.toml (https://thinkred.dev/)
 
       - name: Add CSP script hashes
         run: python3 scripts/csp_hashes.py public
