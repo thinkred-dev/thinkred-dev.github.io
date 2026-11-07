@@ -1,8 +1,11 @@
 {{- /*
-  Override of PaperMod's list.html (theme pinned at 1181196). Change: the tag
-  rail (_partials/tag_rail.html) — every tag and ATT&CK ID with its post
-  count, linking to Hugo's taxonomy pages, which are the filter. A right-hand
-  column on wide screens, a row under the page header on narrow ones.
+  Override of PaperMod's list.html (theme pinned at 1181196). Changes:
+  - the tag rail (_partials/tag_rail.html) — every tag and ATT&CK ID with its
+    post count, linking to Hugo's taxonomy pages, which are the filter. A
+    right-hand column on wide screens, a row under the page header on narrow
+    ones.
+  - each entry shows the post's `description` when set, falling back to the
+    theme's auto-summary (the article's opening words).
   Everything else is the theme's.
 */ -}}
 {{- define "main" }}
@@ -91,7 +94,9 @@
   </header>
   {{- if (ne (.Param "hideSummary") true) }}
   <div class="entry-content">
-    <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+    {{- /* The post's own description when it has one — the line written for
+       exactly this — else the theme's auto-summary (first ~70 words). */}}
+    <p>{{ with .Description }}{{ . | plainify }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}{{ end }}</p>
   </div>
   {{- end }}
   {{- if not (.Param "hideMeta") }}
