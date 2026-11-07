@@ -3,8 +3,16 @@
   '__CSP_SCRIPT_HASHES__' is replaced after the build by scripts/csp_hashes.py
   with a sha256 hash of each inline <script> on that page, so no
   'unsafe-inline' is needed for scripts.
+
+  Production builds only (`hugo`, and the Actions build with
+  HUGO_ENVIRONMENT=production). Under `hugo server` (development) nothing
+  fills the hash placeholder, so every inline script was blocked, and Safari
+  honors upgrade-insecure-requests on http://localhost, so every image failed
+  with a TLS error. Verified in WebKit and Chromium.
 */ -}}
+{{- if hugo.IsProduction }}
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' '__CSP_SCRIPT_HASHES__'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+{{- end }}
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 {{- /* Scalable SVG favicon (modern browsers) and web app manifest.
