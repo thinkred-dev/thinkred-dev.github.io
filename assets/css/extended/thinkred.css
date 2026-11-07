@@ -262,3 +262,90 @@ figure.about-photo img:hover {
         justify-content: center;
     }
 }
+
+/* ---------- Tag rail (layouts/_partials/tag_rail.html) ---------- */
+/* Tags and ATT&CK IDs as one-click filters. Two copies render; exactly one
+   shows: the side column on wide screens, an inline row under the header on
+   narrow ones (where there is no room for a column). */
+.tag-rail-group + .tag-rail-group { margin-top: 18px; }
+
+.tag-rail-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin: 0 0 8px;
+}
+.tag-rail-title::before { content: "# "; color: var(--red); }
+
+.tag-rail-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.tag-rail-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 9px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--content);
+    background: var(--tertiary);
+    border: 1px solid var(--red-dim);
+    border-radius: var(--radius);
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+.tag-rail-list a:hover,
+.tag-rail-list a[aria-current="page"] {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+}
+.tag-rail-count {
+    font-size: 11px;
+    color: var(--secondary);
+}
+.tag-rail-list a:hover .tag-rail-count,
+.tag-rail-list a[aria-current="page"] .tag-rail-count { color: #fff; }
+
+.tag-rail-all {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--red);
+}
+
+/* Narrow: inline row under the header, no side column. */
+.tag-rail-side { display: none; }
+.tag-rail-inline { margin: 0 0 24px; }
+.tag-rail-inline .tag-rail-inner { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 22px; }
+.tag-rail-inline .tag-rail-group + .tag-rail-group { margin-top: 0; }
+.tag-rail-inline .tag-rail-all { margin-top: 0; }
+
+/* Wide: a sticky right-hand column beside the article. The main column
+   keeps its theme width; the page widens to make room for the rail. */
+@media (min-width: 1180px) {
+    .main:has(> .tr-layout) { max-width: calc(var(--main-width) + 260px + var(--gap) * 2); }
+    .tr-layout {
+        display: grid;
+        grid-template-columns: minmax(0, var(--main-width)) 220px;
+        column-gap: 40px;
+        align-items: start;
+    }
+    .tag-rail-inline { display: none; }
+    .tag-rail-side {
+        display: block;
+        position: sticky;
+        top: var(--gap);
+        padding: 14px 0 14px 18px;
+        border-left: 1px solid var(--red-dim);
+    }
+}
