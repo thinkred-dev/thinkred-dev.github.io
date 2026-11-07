@@ -1,0 +1,51 @@
+{{- /*
+  Tag rail: tags and MITRE ATT&CK IDs as one-click links to Hugo's own
+  taxonomy pages (/tags/<tag>/, /attack/<id>/), which ARE the filter — no
+  JavaScript, so the strict CSP is untouched.
+
+  dict:
+    page     the current page
+    variant  "side"   — the right-hand column on wide screens
+             "inline" — the compact row under the title on narrow screens
+  Both are rendered; CSS shows exactly one per breakpoint.
+
+  On a post: that post's own tags / ATT&CK IDs.
+  On a list page (home, section, taxonomy, term): every tag / ATT&CK ID on
+  the site with its post count, the current term marked.
+*/ -}}
+{{- $page := .page }}
+{{- $variant := .variant | default "side" }}
+{{- $isPost := eq $page.Kind "page" }}
+{{- $current := "" }}
+{{- if eq $page.Kind "term" }}{{ $current = $page.RelPermalink }}{{ end }}
+
+{{- $groups := slice }}
+{{- if $isPost }}
+  {{- with $page.GetTerms "tags" }}{{ $groups = $groups | append (dict "title" "Tags" "terms" .) }}{{ end }}
+  {{- with $page.GetTerms "attack" }}{{ $groups = $groups | append (dict "title" "ATT&CK" "terms" .) }}{{ end }}
+{{- else }}
+  {{- with site.Taxonomies.tags }}{{ $groups = $groups | append (dict "title" "Tags" "weighted" .ByCount) }}{{ end }}
+  {{- with site.Taxonomies.attack }}{{ $groups = $groups | append (dict "title" "ATT&CK" "weighted" .ByCount) }}{{ end }}
+{{- end }}
+
+{{- if $groups }}
+<aside class="tag-rail tag-rail-{{ $variant }}" aria-label="{{ if $isPost }}Post tags{{ else }}Filter by tag{{ end }}">
+  <div class="tag-rail-inner">
+    {{- range $groups }}
+    <section class="tag-rail-group">
+      <h2 class="tag-rail-title">{{ .title }}</h2>
+      <ul class="tag-rail-list">
+        {{- range .terms }}
+        <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+        {{- end }}
+        {{- range .weighted }}
+        {{- $p := .Page }}
+        <li><a href="{{ $p.RelPermalink }}"{{ if eq $p.RelPermalink $current }} aria-current="page"{{ end }}>{{ $p.LinkTitle }}<span class="tag-rail-count">{{ .Count }}</span></a></li>
+        {{- end }}
+      </ul>
+    </section>
+    {{- end }}
+    <a class="tag-rail-all" href="{{ "tags/" | relURL }}">all tags »</a>
+  </div>
+</aside>
+{{- end }}
