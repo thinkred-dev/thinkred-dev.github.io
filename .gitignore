@@ -2,3 +2,6 @@
 /resources/_gen/
 .hugo_build.lock
 .DS_Store
+
+# Local-only: Claude Code project instructions (keep off all remotes)
+/CLAUDE.md
