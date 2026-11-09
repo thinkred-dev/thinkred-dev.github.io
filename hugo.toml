@@ -90,6 +90,12 @@ I'm Josh — I spent ~25 years defending identity and infrastructure, then cross
     name = 'linkedin'
     url = 'https://www.linkedin.com/in/jvillago'
   [[params.socialIcons]]
+    name = 'mastodon'
+    url = 'https://infosec.exchange/@thinkred'   # rel="me" target: Mastodon verifies the profile's Website field against this exact URL
+  [[params.socialIcons]]
+    name = 'bluesky'
+    url = 'https://bsky.app/profile/thinkred.dev'
+  [[params.socialIcons]]
     name = 'rss'
     url = '/index.xml'
 

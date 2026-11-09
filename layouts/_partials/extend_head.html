@@ -15,6 +15,11 @@
 {{- end }}
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
+{{- /* Mastodon author attribution: a shared link's preview card shows
+   "More from @thinkred". Only honored because thinkred.dev is listed under
+   the account's Author attribution setting. */ -}}
+<meta name="fediverse:creator" content="@thinkred@infosec.exchange">
+
 {{- /* Scalable SVG favicon (modern browsers) and web app manifest.
    Root-relative URLs so they resolve under http or https. PaperMod already
    links favicon.ico, favicon-16x16.png, favicon-32x32.png, apple-touch-icon.png
