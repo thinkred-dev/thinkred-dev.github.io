@@ -11,7 +11,8 @@
 
   On a post: that post's own tags / ATT&CK IDs.
   On a list page (home, section, taxonomy, term): every tag / ATT&CK ID on
-  the site with its post count, the current term marked.
+  the site with its post count, the current term marked — minus the group a
+  taxonomy index already lists in its body.
 */ -}}
 {{- $page := .page }}
 {{- $variant := .variant | default "side" }}
@@ -24,8 +25,11 @@
   {{- with $page.GetTerms "tags" }}{{ $groups = $groups | append (dict "title" "Tags" "terms" .) }}{{ end }}
   {{- with $page.GetTerms "attack" }}{{ $groups = $groups | append (dict "title" "ATT&CK" "terms" .) }}{{ end }}
 {{- else }}
-  {{- with site.Taxonomies.tags }}{{ $groups = $groups | append (dict "title" "Tags" "weighted" .ByCount) }}{{ end }}
-  {{- with site.Taxonomies.attack }}{{ $groups = $groups | append (dict "title" "ATT&CK" "weighted" .ByCount) }}{{ end }}
+  {{- /* On a taxonomy index (/tags/, /attack/) the page body already lists
+     that taxonomy's terms, so the rail leaves that group out. */}}
+  {{- $listed := cond (eq $page.Kind "taxonomy") $page.Type "" }}
+  {{- if ne $listed "tags" }}{{ with site.Taxonomies.tags }}{{ $groups = $groups | append (dict "title" "Tags" "weighted" .ByCount) }}{{ end }}{{ end }}
+  {{- if ne $listed "attack" }}{{ with site.Taxonomies.attack }}{{ $groups = $groups | append (dict "title" "ATT&CK" "weighted" .ByCount) }}{{ end }}{{ end }}
 {{- end }}
 
 {{- if $groups }}
@@ -45,7 +49,8 @@
       </ul>
     </section>
     {{- end }}
-    <a class="tag-rail-all" href="{{ "tags/" | relURL }}">all tags »</a>
+    {{- $all := "tags/" | relURL }}
+    <a class="tag-rail-all" href="{{ $all }}"{{ if eq $page.RelPermalink $all }} aria-current="page"{{ end }}>all tags »</a>
   </div>
 </aside>
 {{- end }}
