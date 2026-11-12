@@ -4,6 +4,7 @@
 #   - only refs/heads/main is being pushed (no draft branches, no tags)
 #   - every new commit's author AND committer email is the thinkred-dev noreply address
 #   - every new commit is signed
+#   - no new commit message carries a Co-Authored-By trailer or an anthropic.com address
 # Pushes to Forgejo (origin) are not checked.
 set -euo pipefail
 
@@ -44,6 +45,12 @@ while read -r local_ref local_sha remote_ref remote_sha; do
       echo "✗ $short is not signed"
       fail=1
     fi
+    # Attribution trailers put another identity (and e-mail) in public history.
+    trailer=$(git log -1 --format=%B "$c" | grep -iE '^co-authored-by:|anthropic\.com' | head -1 || true)
+    if [ -n "$trailer" ]; then
+      echo "✗ $short message carries an attribution line: $trailer"
+      fail=1
+    fi
   done
 done
 
@@ -51,6 +58,7 @@ if [ "$fail" -ne 0 ]; then
   echo
   echo "Push to $remote_name blocked by .githooks/pre-push."
   echo "Fix with: git rebase -i --exec 'git commit --amend --no-edit --reset-author -S' <base>"
+  echo "Attribution line: reword those commits to drop it (e.g. git rebase -i <base>, mark them 'reword')."
   exit 1
 fi
-echo "✓ pre-push: main only, identity and signatures OK"
+echo "✓ pre-push: main only, identity, signatures and messages OK"
